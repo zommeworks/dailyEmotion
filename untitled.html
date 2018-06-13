@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="style.css" rel="stylesheet">
+  </head>
+
+  <body style="margin: 0; padding: 0; background-color: #ffffff;">
+    <!--<script type="text/javascript">
+      
+      $.ajax({
+        type: "GET",
+        url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR5Cv9DKRuCQteC-S3U8QtazmDlF7JEFeSpjoPf_J974VTYXRwO0TIMsdEK8v8rB3heRMWWMge-YotF/pub?gid=0&single=true&output=csv",
+        dataType: "text",
+      }).done(parseTxt);
+
+      function parseTxt(text){
+        var allRows = data.split(/\r?\n|\r/);
+        var table = '<table>';
+        for (var singleRow = 0; singleRow < allRows.length; singleRow++) {
+          if (singleRow === 0) {
+            table += '<thead>';
+            table += '<tr>';
+          } else {
+            table += '<tr>';
+          }
+          var rowCells = allRows[singleRow].split(',');
+          for (var rowCell = 0; rowCell < rowCells.length; rowCell++) {
+            if (singleRow === 0) {
+              table += '<th>';
+              table += rowCells[rowCell];
+              table += '</th>';
+            } else {
+              table += '<td>';
+              table += rowCells[rowCell];
+              table += '</td>';
+            }
+          }
+          if (singleRow === 0) {
+            table += '</tr>';
+            table += '</thead>';
+            table += '<tbody>';
+          } else {
+            table += '</tr>';
+          }
+        } 
+        table += '</tbody>';
+        table += '</table>';
+        $('body').append(table);
+      }
+      
+      /*
+      function loadData() {
+        var url="https://docs.google.com/spreadsheets/d/e/2PACX-1vR5Cv9DKRuCQteC-S3U8QtazmDlF7JEFeSpjoPf_J974VTYXRwO0TIMsdEK8v8rB3heRMWWMge-YotF/pub?gid=0&single=true&output=csv";
+        xmlhttp=new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+          if(xmlhttp.readyState == 4 && xmlhttp.status==200){
+            document.getElementsByTagName("body")[0].innerHTML = xmlhttp.responseText;
+          }
+        };
+        xmlhttp.open("GET",url,true);
+        xmlhttp.send(null);
+      }
+      */
+    </script>-->
+    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR5Cv9DKRuCQteC-S3U8QtazmDlF7JEFeSpjoPf_J974VTYXRwO0TIMsdEK8v8rB3heRMWWMge-YotF/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+  </body>
+</html>

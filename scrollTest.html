@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		body{
+			margin: 0;
+			padding: 0;
+		}
+		.ball {
+			display: inline-block;
+			position: absolute;
+			background-color: black;
+			width: 100px;
+			height: 100px;
+			top: 50vh;
+			left: 50vw;
+			transform: translate(-50%, -50%);
+			border-radius: 50px;
+		}
+		.left, .right {
+			display: inline-block;
+			position: fixed;
+			width: 30vw;
+			height: 100vh;
+			top: 0;
+			background-color: rgba(0,0,0,0.1);
+		}
+		.right {
+			right: 0;
+		}
+		#coord{
+			position: fixed;
+			top: 60vh;
+			left: 50vw;
+			transform: translate(-50%, -50%);
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<h1 id="coord"></h1>
+	<div id="ball" class="ball"></div>
+	<div id="left" class="left"></div>
+	<div id="right" class="right"></div>
+	<script>
+		var ball = document.getElementById("ball");
+		var left = document.getElementById("left");
+		var right = document.getElementById("right");
+		var v0 = 0.0;
+		var vA = 0;
+		var aTcount = 0;
+		var aTincrease = 30;
+		var aTzero = 20;
+		var aTdecrease = 10;
+		var hoverRepeater;
+		var scrollRepeater;
+		left.onmousemove = function(e){
+			var d = left.getBoundingClientRect().width;
+			var mX = e.clientX;
+			v0 =0.1*(mX-d)/d;
+			hoverBall();
+			//alert(ball.getBoundingClientRect().left);
+		};
+		right.onmousemove = function(e){
+			var w = right.getBoundingClientRect().width;
+			var d = window.innerWidth - w;
+			var mX = e.clientX;
+			v0 =0.1*(mX-d)/w;
+			hoverBall();
+			//alert(ball.getBoundingClientRect().left);
+		};
+		left.onmouseout = function(e){
+			v0 = 0;
+			clearInterval(hoverRepeater);
+		};
+		right.onmouseout = function(e){
+			v0 = 0;
+			clearInterval(hoverRepeater);
+		};
+		document.onwheel = function(e){
+			vA = (-0.2)*e.deltaY;
+			aTcount = aTincrease;
+			clearInterval(scrollRepeater);
+			scrollBall();
+			document.getElementById("coord").innerHTML = (-1)*0.2*e.deltaY + "px";
+		}
+		function hoverBall(){
+			hoverRepeater = setInterval(function(){
+				var x = ball.getBoundingClientRect().left + ball.getBoundingClientRect().width/2;
+				if((x >= 0)&&(x <= window.innerWidth)){
+					ball.style.left = x + v0 + "px";
+					document.getElementById("coord").innerHTML = x + "px";
+				}
+				else if(x < 0){
+					v0 = 0;
+					ball.style.left = "0px";
+					clearInterval(hoverRepeater);
+					clearInterval(scrollRepeater);
+				}
+				else if(x > window.innerWidth){
+					v0 = 0;
+					ball.style.left = window.innerWidth+"px";
+					clearInterval(scrollRepeater);
+					clearInterval(hoverRepeater);
+				}
+			}, 20);
+		}
+		function scrollBall(){
+			scrollRepeater = setInterval(function(){
+				var x = ball.getBoundingClientRect().left + ball.getBoundingClientRect().width/2;
+				if((x >= 0)&&(x <= window.innerWidth)){
+					if(aTcount > aTzero){
+						x += vA*(aTincrease - aTcount)/(aTincrease - aTzero)/2;
+						aTcount--;
+					}
+					else if(aTcount > aTdecrease){
+						x += vA;
+						aTcount--;
+					}
+					else if(aTcount > 0){
+						x += vA -vA*(aTdecrease - aTcount)/(aTzero - aTdecrease)/2;
+						aTcount--;
+					}
+					else{
+						//do nothing
+						vA = 0;
+						clearInterval(scrollRepeater);
+					}
+					ball.style.left = x + "px";
+					document.getElementById("coord").innerHTML = x + "px";
+				}
+				else if(x < 0){
+					v0 = 0;
+					vA = 0;
+					ball.style.left = "0px";
+					clearInterval(hoverRepeater);
+					clearInterval(scrollRepeater);
+				}
+				else if(x > window.innerWidth){
+					v0 = 0;
+					vA = 0;
+					ball.style.left = window.innerWidth+"px";
+					clearInterval(hoverRepeater);
+					clearInterval(scrollRepeater);
+				}
+			}, 20);
+		}
+		/*
+		function getCssProperty(elmId, property){
+		   var elem = document.getElementById(elmId);
+		   return window.getComputedStyle(elem,null).getPropertyValue(property);
+		}
+		*/
+	</script>
+</body>
+</html>
